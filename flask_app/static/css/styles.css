@@ -1,0 +1,45 @@
+body{
+    background-image:  url("../img/background.jpeg");
+}
+
+/* .top, .middle, .bottom{
+
+}
+
+.male{
+    background-image: url("../img/background.jpeg");
+    height: 200px; 
+    width: 250px;
+}
+
+.female{
+    background-image: url("{{ url_for('static/img', filename='female.jpeg') }}");
+}
+
+.lgbtq{
+    background-image: url("{{ url_for('static/img', filename='lgbtq.jpeg') }}");
+}
+
+.physical{
+    background-image: url("{{ url_for('static/img', filename='physical.jpeg') }}");
+}
+
+.mental{
+    background-image: url("{{ url_for('static/img', filename='mental.jpeg') }}");
+}
+
+.financial{
+    background-image: url("{{ url_for('static/img', filename='financial.jpeg') }}");
+}
+
+.citizen{
+    background-image: url("{{ url_for('static/img', filename='citizen.jpeg') }}");
+}
+
+.immigrant{
+    background-image: url("{{ url_for('static/img', filename='immigration.jpeg') }}");
+}
+
+.refugee{
+    background-image: url("{{ url_for('static/img', filename='refugee.jpeg') }}");
+} */
