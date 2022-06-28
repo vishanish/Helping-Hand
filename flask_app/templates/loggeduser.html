@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css">
+    <title>Welcome</title>
+</head>
+<body>
+    <!-- One way to get data from the server file is with a variable
+    Another way to get data from ths server is directly with session key. -->
+    <h1>Welcome {{sfirst}} {{session["slast_name"]}}</h1>
+    <a href = "/user/logout" class = "btn btn-danger">Logout</a>
+</body>
+</html>

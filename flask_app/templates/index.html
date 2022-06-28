@@ -10,18 +10,18 @@
 </head>
 <body">
     <div class = "navbar">
-        <img src="{{ url_for('static', filename = 'img/logo.png') }}" alt="Logo">
+        <a href = "/" style ="text-decoration:none"><img src="{{ url_for('static', filename = 'img/logo.png') }}" alt="Logo"></a>
         <h1>Helping Hand</h1>
-        <a href="/account"style ="text-decoration:none">Login/CreateAccount</a>
+        <a href="/registerlogin"style ="text-decoration:none">Login/CreateAccount</a>
     </div>
 
     <div class = 'top' style = "height:200px margin: 5px">
         <h2> Find Help According To Your Gender/Sexual Orientation:</h2>
         <div style = "display:flex; justify-content: space-around;">
-            <a href="/male"><img src="{{ url_for('static', filename = 'img/male.jpeg') }}" alt="Male" style = "height: 200px; width: 250px"></a>
-            <a href="/female"><img src="{{ url_for('static', filename = 'img/FEmale.jpeg') }}" alt="Female" style = "height : 200px; width: 250px"></a>
-            <a href="/lgbtq"><img src="{{ url_for('static', filename = 'img/lgbtq.jpeg') }}" alt="Lgbtq" style = "height : 200px; width: 250px"></a>
-            <a href="/donot"><img src="{{ url_for('static', filename = 'img/donot.png') }}" alt="Lgbtq" style = "height : 200px; width: 250px"></a>
+            <a href="/male"><img src="{{ url_for('static', filename = 'img/male.jpeg') }}" alt="male" style = "height: 200px; width: 250px"></a>
+            <a href="/female"><img src="{{ url_for('static', filename = 'img/female.jpeg') }}" alt="female" style = "height : 200px; width: 250px"></a>
+            <a href="/lgbtq"><img src="{{ url_for('static', filename = 'img/lgbtq.jpeg') }}" alt="lgbtq" style = "height : 200px; width: 250px"></a>
+            <a href="/donot"><img src="{{ url_for('static', filename = 'img/donot.png') }}" alt="dnk" style = "height : 200px; width: 250px"></a>
         </div>
     </div>
 
