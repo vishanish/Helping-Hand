@@ -18,130 +18,161 @@
         <a href="/user/logout" class="btn btn-danger">Logout</a>
     </div>
     <div class="text-center">
-        <h1>Hello {{session["sfirst_name"]}}</h1>
+        <h1>Hello</h1>
         <h3>You are logged in as a provider</h3>
-        <h3>Please fill in your details for clients</h3>
     </div>
-    <div style="display:flex; justify-content: center;">
-        <form>
-            <div class="row">
-                <div class="col">
-                    <label for="first_name">First Name:</label>
-                    <input type="text" name="first_name" id="first_name" class="row form-control-sm m-2"
-                        placeholder="First Name">
+    <div style="text-align: center;">
+        <input type = 'hidden' name = "id" value = "{{user_card.email}}" />
+            <div>   
+                <div class="row">
+                    <div class="col">
+                        <p for="first_name">First Name: {{user_card.first_name}} </p>
+                    </div>
+                    <div class="col">
+                        <p for="last_name">Last Name: {{user_card.last_name}}</p>
+                    </div>
                 </div>
-                <div class="col">
-                    <label for="last_name">Last Name:</label>
-                    <input type="text" name="last_name" id="last_name" class="row form-control-sm m-2"
-                        placeholder="Last Name">
-                </div>
-            </div>
-            <div class="row">
-                <div class="col">
-                    <label for="emailreg">Email:</label>
-                    <input type="email" name="email" id="emailreg" class="row form-control-sm m-2" placeholder="Email">
-                </div>
-                <div class="col">
-                    <label for="phone_number">Phone Number:</label>
-                    <input type="tel" name="phone_number" id="phone_number" class="row form-control-sm m-2"
-                        placeholder="Phone Number">
+                <div class="row">
+                    <div class="col">
+                        <p for="email">Email: {{user_card.email}}</p>
+                    </div>
+                    <div class="col">
+                        <p for="phone_number">Phone Number: {{user_card.phone_number}}</p>
+                    </div>
+                    <div class="col">
+                        <p for="phone_number">Occupation: {{user_card.occupation}}</p>
+                    </div>
                 </div>
             </div>
 
-            <label for="appt">Choose your work hours:</label>
-            <input type="time" id="appt" name="appt" min="09:00" max="18:00">
-            <input type="time" id="appt" name="appt" min="09:00" max="18:00"><br />
-            <!-- <input type="time" id="appt" name="appt" min="09:00" max="18:00" required>
-            <small>Office hours are 9am to 6pm</small> -->
-            <label> Please select your speciality below: </label>
+            <!-- ----------------------------Business Hours: --------------------------------->
             <div>
-                <div>
-                    <label for="gender">Gender:</label>
-                    <label class="checkbox-inline">
-                        <input type="checkbox" value="Male">Male
-                    </label>
-                    <label class="checkbox-inline">
-                        <input type="checkbox" value="Female">Female
-                    </label>
-                    <label class="checkbox-inline">
-                        <input type="checkbox" value="LGBTQ">LGBTQ+
-                    </label>
-                    <label class="checkbox-inline">
-                        <input type="checkbox" name="Other">Other:
-                        <input type="text">
-                    </label>
-                </div>
-                <div>
-                    <label for="gender">Hardships:</label>
-                    <label class="checkbox-inline">
-                        <input type="checkbox" value="Physical">Physical
-                    </label>
-                    <label class="checkbox-inline">
-                        <input type="checkbox" value="Mental">Mental
-                    </label>
-                    <label class="checkbox-inline">
-                        <input type="checkbox" value="Financial">Financial
-                    </label>
-                    <label class="checkbox-inline">
-                        <input type="checkbox" name="Other">Other:
-                        <input type="text">
-                    </label>
-                </div>
-                <div>
-                    <label for="gender">Citizenship Status:</label>
-                    <label class="checkbox-inline">
-                        <input type="checkbox" value="Physical">Citizen
-                    </label>
-                    <label class="checkbox-inline">
-                        <input type="checkbox" value="Mental">Immigrant
-                    </label>
-                    <label class="checkbox-inline">
-                        <input type="checkbox" value="Financial">Refugee
-                    </label>
-                    <label class="checkbox-inline">
-                        <input type="checkbox" name="Other">Other:
-                        <input type="text">
-                    </label>
+                <label for="appt" style="font-weight: bold; text-decoration: underline;">Business hours: </label><br />
+                <div class='row'>
+                    <div class='col'>
+                        <p for="sunday"> <span style="font-weight: bold;">Sunday: </span>
+                            <span for="sundayopen">Open: {{business_card.sundayopen}}</span>-
+                            <span for="sundayclose" >Close: {{business_card.sundayclose}}</span>
+                        </p><br />
+    
+                        <p for="monday"> <span style="font-weight: bold;">Monday: </span>
+                            <span for="mondayopen">Open: {{business_card.mondayopen}}</span>-
+                            <span for="mondayclose">Close: {{business_card.mondayclose}}</span>
+                        </p><br />
+    
+                        <p for="tuesday"> <span style="font-weight: bold;">Tuesday: </span>
+                            <span for="tuesdayopen">Open: {{business_card.tuesdayopen}}</span>-
+                            <span for="tuesdayclose">Close: {{business_card.tuesdayclose}}</span>
+                        </p><br />
+    
+                        <p for="wednesday"> <span style="font-weight: bold;">Wedndesday: </span>
+                            <span for="wednesdayopen">Open: {{business_card.wednesdayopen}}</span>-
+                            <span for="wednesdayclose">Close: {{business_card.wednesdayclose}}</span>
+                        </p><br />
+    
+                    </div>
+                    <div class='col'>
+                        <p for="thursday"> <span style="font-weight: bold;">Thursday: </span>
+                            <span for="thrusdayopen" >Open: {{business_card.thursdayopen}}</span>-
+                            <span for="thrusdayclose">Close: {{business_card.thursdayclose}}</span>
+                        </p><br />
+    
+                        <p for="friday"> <span style="font-weight: bold;">Friday: </span>
+                            <span for="fridayopen">Open: {{business_card.fridayopen}}</span>-
+                            <span for="fridayclose">Close: {{business_card.fridayclose}}</span>
+                        </p><br />
+    
+                        <p for="saturday"> <span style="font-weight: bold;">Saturday: </span>
+                            <span for="saturdayopen">Open: {{business_card.saturdayopen}}</span>-
+                            <span for="saturdayclose">Close: {{business_card.saturdayclose}}</span>
+                        </p>
+                    </div>
                 </div>
             </div>
 
-            <label for="address">Address:</label>
+            <!-- -------------------------Speciality---------------------------------------- -->
             <div>
-                <div class = "row">
-                    <div class = "col">
-                        <input type="number" name="house_number" id="house_number" class="row form-control-sm m-2"
-                            placeholder="House Number">
+                <label style="font-weight: bold; text-decoration: underline;"> Speciality: </label>
+                <div>
+                    <div>
+                        <p for="gender" style="font-weight: bold;">Gender:</p>
+                        {% if speciality_card.male   == '1' %}
+                        <span>Male</span>
+                        {% endif %}
+                        {% if speciality_card.female   == '1' %}
+                        <span>Female</span>
+                        {% endif %}
+                        {% if speciality_card.lgbtq   == '1' %}
+                        <span>Lgbtq</span>
+                        {% endif %}
+                        <span>{{speciality_card.gender_other}}</span>
                     </div>
-                    <div class = "col">
-                        <input type="text" name="street_name" id="street_name" class="row form-control-sm m-2"
-                            placeholder="Street Name">
+                    <div>
+                        <p for="gender" style="font-weight: bold;">Hardships:</p>
+                        {% if speciality_card.physical  == '1' %}
+                        <span>Physical</span>
+                        {% endif %}
+                        {% if speciality_card.mental   == '1' %}
+                        <span>Mental</span>
+                        {% endif %}
+                        {% if speciality_card.financial   == '1' %}
+                        <span>Financial</span>
+                        {% endif %}
+                        <span>{{speciality_card.hardship_other}}</span> 
                     </div>
-                    <div class = "col">
-                        <input type="text" name="suite_number" id="suite_number" class="row form-control-sm m-2"
-                            placeholder="Suite Number">
-                    </div>
-                </div>
-                <div class = "row">
-                    <div class = "col">
-                        <input type="text" name="city_name" id="city_name" class="row form-control-sm m-2"
-                            placeholder="City Name">
-                    </div>
-                    <div class = "col">
-                        <input type="text" name="state" id="state" minlength="2" maxlength="2" class="row form-control-sm m-2"
-                            placeholder="State">
-                    </div>
-                    <div class = "col">
-                        <input type="number" name="zip_code" id="zip_code" class="row form-control-sm m-2"
-                            placeholder="Zip Code">
+                    <div>
+                        <p for="gender" style="font-weight: bold;">Status:</p>
+                        {% if speciality_card.citizen  == '1' %}
+                        <span>Citizen</span>
+                        {% endif %}
+                        {% if speciality_card.immigrant   == '1' %}
+                        <span>Immigrant</span>
+                        {% endif %}
+                        {% if speciality_card.refugee   == '1' %}
+                        <span>Refugee</span>
+                        {% endif %}
+                        <span>{{speciality_card.status_other}}</span> 
                     </div>
                 </div>
             </div>
-            <input type="submit" value="Register" class="btn btn-primary m-2">
-        </form>
+
+            <!-- ---------------------------------Work Address----------------------------------- -->
+            <div>
+                <label for="address" style="font-weight: bold; text-decoration: underline;"> Work Address:</label>
+                <div>
+                    <div class="row">
+                        <div class="col">
+                            <p>{{address_card.house_number}}</p>
+                        </div>
+                        <div class="col">
+                            <p>{{address_card.street_name}}</p>
+                        </div>
+                        <div class="col">
+                            <p>{{address_card.suite_number}}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <p>{{address_card.city_name}}</p>
+                        </div>
+                        <div class="col">
+                            <p>{{address_card.state}}</p>
+                        </div>
+                        <div class="col">
+                            <p>{{address_card.zip_code}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <a href = "/provider/form" class = "btn btn-primary m-2">Edit Profile</a>
+                <form action = '/provider/delete' method = 'post'>
+                    <input type = 'submit' value = 'Delete Profile' class = 'btn btn-danger' />
+                </form>
+            </div>
     </div>
-    <div style = "display: flex; justify-content: space-evenly;">
+    <!-- <div style="display: flex; justify-content: space-evenly;">
         <a href="">Contact Us</a> <a href="">Sitemap</a>
-    </div>
+    </div> -->
 </body>
-
 </html>

@@ -33,14 +33,16 @@
             </div> -->
             <form action="/user/register" method='POST'>
                 <h2>Register</h2>
-
+                {% with messages = get_flashed_messages() %}     <!-- declare a variable called messages -->
+            {% if messages %}                            <!-- check if there are any messages -->
+                {% for message in messages %}            <!-- loop through the messages -->
+                    <p>{{message}}</p>                   <!-- display each message in a paragraph tag -->
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
                 <label for="first_name">First Name:</label>
                 <input type="text" name="first_name" id="first_name" class="row form-control-sm m-2"
                     placeholder="First Name">
-
-                <label for="last_name">Last Name: </label>
-                <input type="text" name="last_name" id="last_name" class="row form-control-sm m-2"
-                    placeholder="Last Name">
 
                 <label for="emailreg">Email:</label>
                 <input type="email" name="email" id="emailreg" class="row form-control-sm m-2" placeholder="Email">
@@ -52,18 +54,18 @@
                 <label for="confirm">Confirm Password:</label>
                 <input type="password" name="confirm" class="row form-control-sm m-2" placeholder="Confirm Password">
 
-                <label for="seeker_provider">Are you seeker or provider?</label>
+                <label for="seeker_provider">Are you signing up as client or provider?</label>
                 <label for="seeker_provider">(Please select one): </label><br />
-                <input type="radio" id="provider" name="seeker_provider" value="provider">
+                <input type="radio" id="provider" name="seekprov" value="provider">
                 <label for="provider">Provider</label>
-                <input type="radio" id="seeker" name="seeker_provider" value="seeker">
-                <label for="seeker">Seeker</label><br />
+                <input type="radio" id="seeker" name="seekprov" value="seeker">
+                <label for="seeker">Client</label><br />
 
                 <input type="submit" value="Register" class="btn btn-primary m-2">
             </form>
         </div>
         <div>
-            <form action="" method='POST'>
+            <form action="/user/login" method='POST'>
                 <h2>Login</h2>
 
                 <label for="emaillog">Email:</label>
@@ -76,9 +78,9 @@
             </form>
         </div>
     </div>
-    <div style = "display: flex; justify-content: space-evenly;">
+    <!-- <div style = "display: flex; justify-content: space-evenly;">
         <a href="">Contact Us</a> <a href="">Sitemap</a>
-    </div>
+    </div> -->
 </body>
 
 <!-- <script type="text/javascript">

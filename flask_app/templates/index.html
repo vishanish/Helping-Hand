@@ -18,33 +18,34 @@
     <div class = 'top' style = "height:200px margin: 5px">
         <h2> Find Help According To Your Gender/Sexual Orientation:</h2>
         <div style = "display:flex; justify-content: space-around;">
-            <a href="/male"><img src="{{ url_for('static', filename = 'img/male.jpeg') }}" alt="male" style = "height: 200px; width: 250px"></a>
-            <a href="/female"><img src="{{ url_for('static', filename = 'img/female.jpeg') }}" alt="female" style = "height : 200px; width: 250px"></a>
-            <a href="/lgbtq"><img src="{{ url_for('static', filename = 'img/lgbtq.jpeg') }}" alt="lgbtq" style = "height : 200px; width: 250px"></a>
-            <a href="/donot"><img src="{{ url_for('static', filename = 'img/donot.png') }}" alt="dnk" style = "height : 200px; width: 250px"></a>
+            <a href="/gender/male"><img src="{{ url_for('static', filename = 'img/male.jpeg') }}" style = "border: solid black 2px"alt="male"></a>
+            <a href="/gender/female"><img src="{{ url_for('static', filename = 'img/female.jpeg') }}" style = "border: solid black 2px" alt="female"></a>
+            <a href="/gender/lgbtq"><img src="{{ url_for('static', filename = 'img/lgbtq.jpeg') }}" style = "border: solid black 2px" alt="lgbtq"></a>
+            <a href="/gender/other"><img src="{{ url_for('static', filename = 'img/other.png') }}" style = "border: solid black 2px; background-color: pink;" alt="gender_other" ></a>
         </div>
     </div>
 
     <div class = 'middle' style = "height:200px margin: 5px">
         <h2> Find Help According To Your Hardship:</h2>
         <div style = "display:flex; justify-content: space-around;">
-            <a href="/physical"><img src="{{ url_for('static', filename = 'img/physical.jpeg') }}" alt="Physical" style = "height : 200px; width: 250px"></a>
-            <a href="/mental"><img src="{{ url_for('static', filename = 'img/mental.jpeg') }}" alt="Mental" style = "height : 200px; width: 250px"></a>
-            <a href="/financial"><img src="{{ url_for('static', filename = 'img/financial.jpeg') }}" alt="Financial" style = "height : 200px; width: 250px"></a>
-            <a href="/other"><img src="{{ url_for('static', filename = 'img/other.png') }}" alt="Financial" style = "height : 200px; width: 250px"></a>
+            <a href="/hardship/physical"><img src="{{ url_for('static', filename = 'img/physical.jpeg') }}" style = "border: solid black 2px" alt="physical"></a>
+            <a href="/hardship/mental"><img src="{{ url_for('static', filename = 'img/mental.jpeg') }}" style = "border: solid black 2px" alt="mental" ></a>
+            <a href="/hardship/financial"><img src="{{ url_for('static', filename = 'img/financial.jpeg') }}" style = "border: solid black 2px" alt="financial"></a>
+            <a href="/hardship/other"><img src="{{ url_for('static', filename = 'img/other.png') }}" style = "border: solid black 2px; background-color: pink;"alt="hardship_other"></a>
         </div>
     </div>
     
     <div class = 'bottom' style = "height:200px margin: 5px">
         <h2> Find Help According To Your Citizenship Status:</h2>
         <div style = "display:flex; justify-content: space-around;">
-            <a href="/citizen"><img src="{{ url_for('static', filename = 'img/citizen.jpeg') }}" alt="Male" style = "height : 200px; width: 300px"></a>
-            <a href="/immigrant"><img src="{{ url_for('static', filename = 'img/immigration.jpeg') }}" alt="Male" style = "height : 200px; width: 300px"></a>
-            <a href="/refugee"><img src="{{ url_for('static', filename = 'img/refugee.jpeg') }}" alt="Male" style = "height : 200px; width: 300px"></a>
+            <a href="/status/citizen"><img src="{{ url_for('static', filename = 'img/citizen.jpeg') }}" style = "border: solid black 2px" alt="citizen"></a>
+            <a href="/status/immigrant"><img src="{{ url_for('static', filename = 'img/immigration.jpeg') }}" style = "border: solid black 2px" alt="immigrant" ></a>
+            <a href="/status/refugee"><img src="{{ url_for('static', filename = 'img/refugee.jpeg') }}" style = "border: solid black 2px" alt="refugee"></a>
+            <a href="/status/other"><img src="{{ url_for('static', filename = 'img/other.png') }}" style = "border: solid black 2px; background-color: pink;" alt="status_other"></a>
         </div>
     </div>
-    <div style = "display: flex; justify-content: space-evenly;">
+    <!-- <div style = "display: flex; justify-content: space-evenly;">
         <a href="">Contact Us</a> <a href="">Sitemap</a>
-    </div>
+    </div> -->
 </body>
-</html>
+</html> 
