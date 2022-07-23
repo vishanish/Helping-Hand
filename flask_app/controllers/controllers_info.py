@@ -5,6 +5,7 @@ from flask_app.models.models_users import User
 from flask_app.models.models_specialities import Speciality
 from flask_app.models.models_businesshours import Business
 from flask_app.models.models_address import Address
+from flask_app.models.models_appointments import Appointment
 
 # renders the index page
 @app.route('/')
@@ -16,9 +17,9 @@ def index():
 @app.route('/registerlogin')
 def account():
     # this is to prevent the user from going back to logincreate template when the user is in session
-    if 'sfirst_name' and 'semail' in session:
+    if 'first_name' and 'email' in session:
         if (session['seekprov'] == 'provider'):
-            return redirect ('/provider')
+            return redirect ('/provider/dashboard')
         elif (session['seekprov'] == 'seeker'):
             return redirect ('/seeker')
     return render_template('logincreate.html')
@@ -47,7 +48,7 @@ def userregister():
     User.save_reg(data)
     # when a route has a post method, do not render template on this route. redirect to a different route.
     if(session['seekprov'] == 'provider'):
-        return redirect ("/provider")
+        return redirect ("/provider/dashboard")
     elif(session['seekprov'] == 'seeker'):
         return redirect ("/seeker")
 
@@ -81,12 +82,53 @@ def userlogin():
     session['first_name'] = user_db.first_name
     # when a route has a post method, do not render template on this route. redirect to a different route.
     if(session['seekprov'] == 'provider'):
-        return redirect ("/provider")
+        return redirect ("/provider/dashboard")
     elif(session['seekprov'] == 'seeker'):
         return redirect ("/seeker")
 
-@app.route('/provider')
-def provider():
+@app.route('/provider/dashboard')
+def providerdashboard():
+    if 'email' not in session:
+        return redirect('/')
+    data = {
+        "email": session["email"]
+    }
+    return render_template("providerdashboard.html", user_card = User.get_users_by_email(data), set_appointment = Appointment.show_confirmed_appts())
+
+@app.route('/provider/setappointment')
+def providersetappt():
+    if 'email' not in session:
+        return redirect('/')
+    data = {
+        "email": session["email"]
+    }
+    return render_template("providerappointsetup.html", user_card = User.get_users_by_email(data))
+
+@app.route('/provider/appointment/set', methods = ['POST'])
+def providerapptset():
+    data ={
+        "first_name" : request.form["first_name"],
+        "last_name" : request.form["last_name"],
+        "seeker_email" : request.form["seeker_email"],
+        "seeker_phone_number" : request.form["seeker_phone_number"],
+        "apptdate" : request.form["apptdate"],
+        "appttime" : request.form["appttime"],
+        "email" : session['email']
+    }
+    Appointment.create_appt_provider(data)
+    return redirect("/provider/dashboard")
+
+@app.route('/provider/unconfirmed')
+def providerunconfirmedappt():
+    if 'email' not in session:
+        return redirect('/')
+    data = {
+        "email": session["email"]
+    }
+    return render_template("unconfirmedappt.html", user_card = User.get_users_by_email(data), unconfirmed_appointment = Appointment.show_unconfirmed_appts())
+
+@app.route('/provider/profile')
+def providerprofile():
     # this is to prevent crashing of page when a user has logged out and tries to use a back button
     # if 'first_name' and 'email' not in session:
     if 'email' not in session:
@@ -97,7 +139,7 @@ def provider():
 
     # this is one way to transfer data from the session to the template
     # another way is to called the session in the template itself
-    return render_template("provider.html", user_card = User.get_users_by_email(data), business_card = Business.get_provider_hours_by_email(data),
+    return render_template("providerprofile.html", user_card = User.get_users_by_email(data), business_card = Business.get_provider_hours_by_email(data),
     speciality_card = Speciality.get_provider_speciality_by_email(data), address_card = Address.get_provider_address_by_email(data))
 
 @app.route('/provider/form')
@@ -162,7 +204,7 @@ def providerformadd():
         "user_email" : session['email']
     }
     Address.update_provider_address_by_email(data4)
-    return redirect("/provider")
+    return redirect("/provider/profile")
 
 @app.route('/provider/delete', methods = ['POST'])
 def providerdelete():
@@ -233,3 +275,10 @@ def seekerdelete():
     }
     User.delete_seeker_user_account(data)
     return redirect('/registerlogin')
+
+@app.route('/provider/appointment')
+def providerappointmentform():
+    data = {
+        "email":session["email"]
+    }
+    return render_template("providerappointsetup.html", user_card = User.get_users_by_email(data))
