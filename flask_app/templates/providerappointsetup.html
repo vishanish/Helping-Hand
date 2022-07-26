@@ -17,8 +17,8 @@
         <a href="/"><img src="{{ url_for('static', filename = 'img/logotext.png') }}" alt="Logotext"></a>
         <a href="/user/logout" class="btn btn-danger">Logout</a>
     </div>
-    <div style="text-align: center;">
-        <div style = "border: 3px solid black; margin-left: 25px; margin-right: 25px;">
+    <div style = "text-align: center; border: 3px solid black; margin: 30px; padding: 10px;">
+        <h1 style = "text-decoration: underline;">Set Appointments</h1>
             <form action='/provider/appointment/set' method='post'>
                 <input type='hidden' name="user_email" value="{{user_card.email}}" />
                 <div class="row">
@@ -51,10 +51,12 @@
                         <input type="time" name="appttime" id="appttime" class="row form-control-sm m-2"/>
                     </div>
                 </div>
+                <div>
+                    <p for = "confirmed">Cofirm Appointment: <input type="checkbox" name = "confirmed" value = "Confirmed" /></p>
+                </div>
                 <input type="submit" value = "Set Appointment" class = "btn btn-primary m-2" />
             </form>
             <a href="/provider/dashboard" class="btn btn-primary m-2">Cancel</a>
-        </div>
     </div>
 </body>
 

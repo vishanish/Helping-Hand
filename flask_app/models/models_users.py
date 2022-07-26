@@ -58,18 +58,18 @@ class User:
             'male' : 'None',
             'female' : 'None',
             'lgbtq' : 'None',
-            'gender_other' : 'None',
+            'any_gender' : 'None',
             'physical' : 'None',
             'mental' : 'None',
             'financial' : 'None',
-            'hardship_other' : 'None',
+            'any_hardship' : 'None',
             'citizen' : 'None',
             'immigrant' : 'None',
             'refugee' : 'None',
-            'status_other' : 'None',
+            'any_status' : 'None',
             'user_email' : data['email']
         }
-        query3 =  "INSERT INTO specialities (male, female, lgbtq, gender_other, physical, mental, financial, hardship_other, citizen, immigrant, refugee, status_other, created_at, updated_at, user_email) VALUES (%(male)s, %(female)s, %(lgbtq)s, %(gender_other)s, %(physical)s, %(mental)s, %(financial)s, %(hardship_other)s, %(citizen)s, %(immigrant)s, %(refugee)s, %(status_other)s, NOW(), NOW(), %(user_email)s);"
+        query3 =  "INSERT INTO specialities (male, female, lgbtq, any_gender, physical, mental, financial, any_hardship, citizen, immigrant, refugee, any_status, created_at, updated_at, user_email) VALUES (%(male)s, %(female)s, %(lgbtq)s, %(any_gender)s, %(physical)s, %(mental)s, %(financial)s, %(any_hardship)s, %(citizen)s, %(immigrant)s, %(refugee)s, %(any_status)s, NOW(), NOW(), %(user_email)s);"
         result3 = connectToMySQL('helping_hand_schema').query_db(query3, speciality)
 
         address = {

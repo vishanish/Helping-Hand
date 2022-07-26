@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selected Providers</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='/css/styles.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="navbar">
+        <a href="/"><img src="{{ url_for('static', filename = 'img/logo.png') }}" alt="Logo"></a>
+        <a href="/"><img src="{{ url_for('static', filename = 'img/logotext.png') }}" alt="Logotext"></a>
+        <a href="/user/logout" class="btn btn-danger">Logout</a>
+    </div>
+    <div style ="display:flex; justify-content: space-around;">
+        <a href="/seeker/dashboard" class = "btn btn-primary">Dashboard</a>
+        <a href="/seeker/requested" class = "btn btn-primary">Requested Appointments</a>
+        <a href="/seeker/unconfirmed" class = "btn btn-primary">Unconfirmed Appointments</a>
+        <a href="/seeker/profile" class = "btn btn-primary">Profile</a>
+    </div>
+    <div style="text-align: center; border: 3px solid black; margin: 30px; padding: 10px;">
+        <h1>Selected Providers</h1>
+        <div style="border: 2px solid black; margin: 30px; padding: 10px;">
+            {% for seekcard in seeker_card %}
+            {% for provcard in provider_card %}
+            {% if (seekcard.male == '1'and provcard.male == '1') or (seekcard.female == '1' and provcard.female == '1')
+            or
+            (seekcard.lgbtq == '1' and provcard.lgbtq == '1') or (seekcard.any_gender == '1' and provcard.any_gender ==
+            '1')
+            or (seekcard.physical == '1' and provcard.physical == '1') or (seekcard.mental == '1' and provcard.mental ==
+            '1') or (seekcard.financial == '1' and provcard.financial == '1') or (seekcard.any_hardship == '1' and
+            provcard.any_hardship == '1') or (seekcard.citizen == '1' and provcard.citizen == '1') or
+            (seekcard.immigrant ==
+            '1' and provcard.immigrant == '1') or (seekcard.refugee == '1' and provcard.refugee == '1') or
+            (seekcard.any_status == '1' and provcard.any_status == '1') %}
+            <div class='row'>
+                <div class="col">
+                    <span>{{provcard.last_name}}, {{provcard.first_name}}</span><br />
+                    <span>{{provcard.occupation}}</span><br />
+                    Specialities:
+                    <span>
+                        {% if provcard.male == '1' %}
+                        <span>Male</span>
+                        {% endif %}
+                        {% if provcard.female == '1' %}
+                        <span>Female</span>
+                        {% endif %}
+                        {% if provcard.lgbtq == '1' %}
+                        <span>LGBTQ</span>
+                        {% endif %}
+                        {% if provcard.any_gender == '1' %}
+                        <span>Any Gender</span>
+                        {% endif %}
+                        {% if provcard.physical == '1' %}
+                        <span>Physical</span>
+                        {% endif %}
+                        {% if provcard.mental == '1' %}
+                        <span>Mental</span>
+                        {% endif %}
+                        {% if provcard.financial == '1' %}
+                        <span>Financial</span>
+                        {% endif %}
+                        {% if provcard.any_hardship == '1' %}
+                        <span>Any Hardship</span>
+                        {% endif %}
+                        {% if provcard.citizen == '1' %}
+                        <span>Citizen</span>
+                        {% endif %}
+                        {% if provcard.immigrant == '1' %}
+                        <span>Immigrant</span>
+                        {% endif %}
+                        {% if provcard.refugee == '1' %}
+                        <span>Refugee</span>
+                        {% endif %}
+                        {% if provcard.any_status == '1' %}
+                        <span>Any Status</span>
+                        {% endif %}
+                    </span><br />
+                    <span>{{provcard.email}}</span><br />
+                    <span>{{provcard.phone_number}}</span> <br />
+                    <div>
+                        <span style="font-weight: bold;">Address: </span><br />
+                        <span>{{provcard.house_number}} {{provcard.street_name}}</span><br />
+                        {% if provcard.suite_number != None %}
+                        <span>{{provcard.suite_number}}</span>
+                        {% endif %}<br />
+                        <span>{{provcard.city_name}}, {{provcard.state}} - {{provcard.zip_code}}</span>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <h5> Business Hours: </h5>
+                    <span>Sunday: {{provcard.sundayopen}} - {{provcard.sundayclose}}</span><br />
+                    <span>Monday: {{provcard.mondayopen}} - {{provcard.mondayclose}}</span><br />
+                    <span>Tuesday: {{provcard.tuesdayopen}} - {{provcard.tuesdayclose}}</span><br />
+                    <span>Wednesday: {{provcard.wednesdayopen}} - {{provcard.wednesdayclose}}</span><br />
+                    <span>Thursday: {{provcard.thursdayopen}} - {{provcard.thursdayclose}}</span><br />
+                    <span>Friday: {{provcard.fridayopen}} - {{provcard.fridayclose}}</span><br />
+                    <span>Saturday: {{provcard.saturdayopen}} - {{provcard.saturdayclose}}</span>
+                </div>
+            </div>
+            <div>
+                <form action = '/seeker/requesting' method = "post">
+                    <input type = "hidden" id = "first_name" name = "first_name" value = "{{seekcard.first_name}}"/>
+                    <input type = "hidden" id = "last_name" name = "last_name" value = "{{seekcard.last_name}}"/>
+                    <input type = "hidden" id = "phone_number" name = "phone_number" value = "{{seekcard.phone_number}}" />
+                    <input type = "hidden" id = "user_email" name = "user_email" value = "{{provcard.email}}"/>
+                    <input type = submit value = "Request Appointment" class = "btn btn-primary"/>
+                </form>
+            </div>
+            <!-- <a href = "#" class = "btn btn-primary">Request Appointment</a> -->
+            {% endif %}
+            {% endfor %}
+            {% endfor %}
+        </div>
+    </div>
+
+</body>
+
+</html>

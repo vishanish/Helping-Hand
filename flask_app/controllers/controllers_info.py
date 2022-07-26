@@ -1,4 +1,4 @@
-from ast import Add
+from datetime import date
 from flask_app import app
 from flask import redirect, render_template, request, session
 from flask_app.models.models_users import User
@@ -12,7 +12,7 @@ from flask_app.models.models_appointments import Appointment
 def index():
     return render_template('index.html')
 
-
+# ---------------------------------------- User Routes ----------------------------------------
 # renders the create/login page
 @app.route('/registerlogin')
 def account():
@@ -21,7 +21,7 @@ def account():
         if (session['seekprov'] == 'provider'):
             return redirect ('/provider/dashboard')
         elif (session['seekprov'] == 'seeker'):
-            return redirect ('/seeker')
+            return redirect ('/seeker/dashboard')
     return render_template('logincreate.html')
 
 # performs action to Register the user on create/login page
@@ -50,7 +50,7 @@ def userregister():
     if(session['seekprov'] == 'provider'):
         return redirect ("/provider/dashboard")
     elif(session['seekprov'] == 'seeker'):
-        return redirect ("/seeker")
+        return redirect ("/seeker/dashboard")
 
 # session must be cleared when user exit the page
 @app.route("/user/logout")
@@ -84,7 +84,9 @@ def userlogin():
     if(session['seekprov'] == 'provider'):
         return redirect ("/provider/dashboard")
     elif(session['seekprov'] == 'seeker'):
-        return redirect ("/seeker")
+        return redirect ("/seeker/dashboard")
+
+# ---------------------------------------- Provider Routes ----------------------------------------
 
 @app.route('/provider/dashboard')
 def providerdashboard():
@@ -93,7 +95,7 @@ def providerdashboard():
     data = {
         "email": session["email"]
     }
-    return render_template("providerdashboard.html", user_card = User.get_users_by_email(data), set_appointment = Appointment.show_confirmed_appts())
+    return render_template("providerdashboard.html", user_card = User.get_users_by_email(data), set_appointment = Appointment.show_confirmed_appts_provider(data))
 
 @app.route('/provider/setappointment')
 def providersetappt():
@@ -113,10 +115,46 @@ def providerapptset():
         "seeker_phone_number" : request.form["seeker_phone_number"],
         "apptdate" : request.form["apptdate"],
         "appttime" : request.form["appttime"],
+        "confirmed" : True if request.form.get('confirmed') else False,
+        "requested" : True if request.form.get('requested') else False,
         "email" : session['email']
     }
     Appointment.create_appt_provider(data)
     return redirect("/provider/dashboard")
+
+@app.route("/provider/confirmed/update", methods = ['POST'])
+def providconfirmupdate():
+    data ={
+        
+        "id": request.form["id"],
+        "first_name" : request.form["first_name"],
+        "last_name" : request.form["last_name"],
+        "seeker_email" : request.form["seeker_email"],
+        "seeker_phone_number" : request.form["seeker_phone_number"],
+        "apptdate" : request.form["apptdate"],
+        "appttime" : request.form["appttime"]
+    }
+    Appointment.update_confirmed_appts_provider(data)
+    return redirect ("/provider/dashboard")
+
+@app.route("/provider/requested")
+def providerequestedappt():
+    if 'email' not in session:
+        return redirect('/')
+    data = {
+        "email": session["email"]
+    }
+    return render_template("providerrequested.html", user_card = User.get_users_by_email(data), requested_appointment = Appointment.show_requested_appts_provider(data))
+
+@app.route("/provider/requested/update", methods = ["POST"])
+def providerrequestupdat():
+    data = {
+        "id": request.form["id"],
+        "apptdate": request.form["apptdate"],
+        "appttime": request.form["appttime"]
+    }
+    Appointment.update_requested_appts_provider(data)
+    return redirect("/provider/requested")
 
 @app.route('/provider/unconfirmed')
 def providerunconfirmedappt():
@@ -125,7 +163,7 @@ def providerunconfirmedappt():
     data = {
         "email": session["email"]
     }
-    return render_template("unconfirmedappt.html", user_card = User.get_users_by_email(data), unconfirmed_appointment = Appointment.show_unconfirmed_appts())
+    return render_template("providerunconfirmed.html", user_card = User.get_users_by_email(data), unconfirmed_appointment = Appointment.show_unconfirmed_appts_provider(data))
 
 @app.route('/provider/profile')
 def providerprofile():
@@ -182,15 +220,15 @@ def providerformadd():
         "male" : True if request.form.get('male') else False,
         "female" : True if request.form.get('female') else False,
         "lgbtq" : True if request.form.get('lgbtq') else False,
-        "gender_other" : request.form['gender_other'],
+        "any_gender" : True if request.form.get('any_gender') else False,
         "physical" : True if request.form.get('physical') else False,
         "mental" : True if request.form.get('mental') else False,
         "financial" : True if request.form.get('financial') else False,
-        "hardship_other" : request.form ['hardship_other'],
+        "any_hardship" : True if request.form.get('any_hardship') else False,
         "citizen" : True if request.form.get('citizen') else False,
         "immigrant" : True if request.form.get('immigrant') else False,
         "refugee": True if request.form.get('refugee') else False,
-        "status_other" : request.form['status_other'],
+        "any_status" : True if request.form.get('any_status') else False,
         "user_email": session['email']
     }
     Speciality.update_provider_speciality_by_email(data3)
@@ -214,18 +252,74 @@ def providerdelete():
     User.delete_provider_user_account(data)
     return redirect('/registerlogin')
 
+# ---------------------------------------- Patient/Seeker Routes ----------------------------------------
 
-@app.route('/seeker')
-def seeker():
-    # this is to prevent crashing of page when a user has logged out and tries to use a back button
-    if 'first_name' and 'email' not in session:
+@app.route('/seeker/dashboard')
+def seekerdashboard():
+    if 'email' not in session:
         return redirect('/')
     data = {
         "email": session["email"]
     }
+    return render_template("seekerdashboard.html", user_card = User.get_users_by_email(data), seeker_confirmed = Appointment.show_confirmed_appts_seeker(data))
+
+@app.route('/seeker/selectedproviders')
+def seekersetappt():
+    if 'email' not in session:
+        return redirect('/')
+    data = {
+        "email": session["email"]
+    }
+    return render_template("selectedproviders.html", user_card = User.get_users_by_email(data), seeker_card = Speciality.get_seeker_with_specialities(), provider_card = Speciality.get_provider_with_specialities())
+
+@app.route('/seeker/requesting', methods = ['POST'])
+def seekerrequesting():
+    data = {
+        "first_name" : request.form["first_name"],
+        "last_name" : request.form["last_name"],
+        "seeker_email" : session["email"],
+        "seeker_phone_number" : request.form["phone_number"],
+        "apptdate" : date.today(),
+        "appttime" : 0,
+        "confirmed" : 0,
+        "requested" : 1,
+        "user_email" : request.form['user_email']
+    }
+    Appointment.create_requested_appt_seeker(data)
+    return redirect ("/seeker/selectedproviders")
+
+@app.route('/seeker/requested')
+def seekerrequested():
+    if 'email' not in session:
+        return redirect('/')
+    data = {
+        "email": session["email"]
+    }
+    return render_template("seekerrequested.html", seeker_requested = Appointment.show_requested_appts_seeker(data))
+
+@app.route('/seeker/unconfirmed')
+def seekerunconfirmedappt():
+    if 'email' not in session:
+        return redirect('/')
+    data = {
+        "email": session["email"]
+    }
+    return render_template("seekerunconfirmed.html", user_card = User.get_users_by_email(data), seeker_unconfirmed = Appointment.show_unconfirmed_appts_seeker(data))
+
+@app.route('/seeker/profile')
+def seekerprofile():
+    # this is to prevent crashing of page when a user has logged out and tries to use a back button
+    # if 'first_name' and 'email' not in session:
+    if 'email' not in session:
+        return redirect('/')
+    data = {
+        "email": session["email"]
+    }
+
     # this is one way to transfer data from the session to the template
     # another way is to called the session in the template itself
-    return render_template("seeker.html", user_card = User.get_users_by_email(data), speciality_card = Speciality.get_seeker_speciality_by_email(data), address_card = Address.get_seeker_address_by_email(data))
+    return render_template("seekerprofile.html", user_card = User.get_users_by_email(data), business_card = Business.get_provider_hours_by_email(data),
+    speciality_card = Speciality.get_provider_speciality_by_email(data), address_card = Address.get_provider_address_by_email(data))
 
 @app.route('/seeker/form')
 def seekerform():
@@ -247,15 +341,15 @@ def seekerformadd():
         "male" : True if request.form.get('male') else False,
         "female" : True if request.form.get('female') else False,
         "lgbtq" : True if request.form.get('lgbtq') else False,
-        "gender_other" : request.form['gender_other'],
+        "any_gender" : True if request.form.get('any_gender') else False,
         "physical" : True if request.form.get('physical') else False,
         "mental" : True if request.form.get('mental') else False,
         "financial" : True if request.form.get('financial') else False,
-        "hardship_other" : request.form ['hardship_other'],
+        "any_hardship" : True if request.form.get('any_hardship') else False,
         "citizen" : True if request.form.get('citizen') else False,
         "immigrant" : True if request.form.get('immigrant') else False,
         "refugee": True if request.form.get('refugee') else False,
-        "status_other" : request.form['status_other'],
+        "any_status" : True if request.form.get('any_status') else False,
         "user_email": session['email']
     }
     Speciality.update_seeker_speciality_by_email(data3)
@@ -266,7 +360,7 @@ def seekerformadd():
         "user_email" : session['email']
     }
     Address.update_seeker_address_by_email(data4)
-    return redirect("/seeker")
+    return redirect("/seeker/profile")
 
 @app.route('/seeker/delete', methods = ['POST'])
 def seekerdelete():
@@ -276,9 +370,21 @@ def seekerdelete():
     User.delete_seeker_user_account(data)
     return redirect('/registerlogin')
 
-@app.route('/provider/appointment')
-def providerappointmentform():
+# ---------------------------------------- Cancel Appt ----------------------------------------
+
+@app.route("/dashboard/provider/delete", methods = ['POST'])
+def deleteproviderdashappt():
     data = {
-        "email":session["email"]
+        "id": request.form["id"]
     }
-    return render_template("providerappointsetup.html", user_card = User.get_users_by_email(data))
+    Appointment.delete_appointments(data)
+    return redirect("/provider/dashboard")
+
+
+@app.route("/unconfirmed/provider/cancel", methods = ['POST'])
+def deleteproviderunconfappt():
+    data = {
+        "id": request.form["id"]
+    }
+    Appointment.cancel_appointments(data)
+    return redirect("/provider/unconfirmed")
