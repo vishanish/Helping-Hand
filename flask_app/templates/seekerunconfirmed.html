@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -16,25 +17,37 @@
         <a href="/"><img src="{{ url_for('static', filename = 'img/logotext.png') }}" alt="Logotext"></a>
         <a href="/user/logout" class="btn btn-danger">Logout</a>
     </div>
-    <div style ="display:flex; justify-content: space-around;">
-        <a href="/seeker/dashboard" class = "btn btn-primary">Dashboard</a>
-        <a href="/seeker/selectedproviders" class = "btn btn-primary">Selected Providers</a>
-        <a href="/seeker/requested" class = "btn btn-primary">Requested Appointments</a>
-        <a href="/seeker/profile" class = "btn btn-primary">Profile</a>
+    <div style="display:flex; justify-content: space-around;">
+        <a href="/seeker/dashboard" class="btn btn-primary">Dashboard</a>
+        <a href="/seeker/selectedproviders" class="btn btn-primary">Filtered Providers</a>
+        <a href="/seeker/requested" class="btn btn-primary">Requested Appointments</a>
+        <a href="/seeker/profile" class="btn btn-primary">Profile</a>
     </div>
     <div style="text-align: center;  border: 3px solid black; margin: 30px; padding: 20px;">
         <input type='hidden' name="user_email" value="{{user_card.email}}" />
         <h1>Unconfirmed Appointments</h1>
         {% for seekuncof in seeker_unconfirmed %}
         <div style="border: 2px solid black; margin: 30px; padding: 10px;">
-        {{seekuncof.last_name}}, {{seekuncof.first_name}}<br />
-        {{seekuncof.occupation}}<br />  
-        {{seekuncof.email}}<br />
-        {{seekuncof.phone_number}}<br />
-        {{seekuncof.apptdate}} - {{seekuncof.appttime}}
+            {{seekuncof.last_name}}, {{seekuncof.first_name}}<br />
+            {{seekuncof.occupation}}<br />
+            {{seekuncof.email}}<br />
+            {{seekuncof.phone_number}}<br />
+            {{seekuncof.apptdate}} - {{seekuncof.appttime}}<br />
+            {{seekuncof.house_number}} {{seekuncof.street_name}}, {{seekuncof.suite_number}}<br />
+            {{seekuncof.city_name}}, {{seekuncof.state}}<br />
+            {{seekuncof.zip_code}}
+            <form action="/unconfirmed/seeker/confirm" method="post" style = "margin:2px;">
+                <input type="hidden" name="id" value="{{seekuncof.id}}" />
+                <input type="submit" class="btn btn-primary" value="Confirm Appointment" />
+            </form>
+            <form action="/unconfirmed/seeker/delete" method="post">
+                <input type="hidden" name="id" value="{{seekuncof.id}}" />
+                <input type="submit" class="btn btn-primary" value="Delete Appointment" />
+            </form>
         </div>
         {% endfor %}
     </div>
-    
+
 </body>
+
 </html>

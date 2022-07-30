@@ -42,6 +42,7 @@
                     <input type="tel" name="phone_number" id="phone_number" class="row form-control-sm m-2"
                         value = "{{user_card['phone_number']}}">
                 </div>
+                <input type="hidden" name="occupation" id="occupation" value = "Null">
             </div>
 
         <!-- -------------------------Requirements---------------------------------------- -->
@@ -74,15 +75,15 @@
                 <div class="row">
                     <div class="col">
                         <input type="text" name="city_name" id="city_name" class="row form-control-sm m-2"
-                            placeholder="City Name">
+                            value="{{address_card.city_name}}">
                     </div>
                     <div class="col">
                         <input type="text" name="state" id="state" minlength="2" maxlength="2"
-                            class="row form-control-sm m-2" placeholder="State">
+                            class="row form-control-sm m-2" value="{{address_card.state}}">
                     </div>
                     <div class="col">
                         <input type="number" name="zip_code" id="zip_code" class="row form-control-sm m-2"
-                            placeholder="Zip Code">
+                        value="{{address_card.zip_code}}">
                     </div>
                 </div>
             </div>

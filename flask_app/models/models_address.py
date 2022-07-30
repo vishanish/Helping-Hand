@@ -19,9 +19,14 @@ class Address:
         if results:
             return cls(results[0])
         return False
+    
+    # @classmethod
+    # def create_address(cls,data):
+    #     query = "INSERT INTO work_address (house_number, street_name, suite_number, city_name, state, zip_code, created_at, updated_at, user_email) VALUES (%(house_number)s, %(street_name)s, %(suite_number)s, %(city_name)s, %(state)s, %(zip_code)s, NOW(), NOW(), %(user_email)s);"
+    #     return connectToMySQL('helping_hand_schema').query_db(query,data)
 
     @classmethod
-    def update_provider_address_by_email(cls, data):
+    def update_address_by_email(cls, data):
         query = "UPDATE work_address SET house_number = %(house_number)s, street_name = %(street_name)s, suite_number = %(suite_number)s, city_name = %(city_name)s, state = %(state)s, zip_code = %(zip_code)s,  created_at = NOW(),  updated_at = NOW() WHERE user_email = %(user_email)s"
         return connectToMySQL('helping_hand_schema').query_db(query, data)
     
@@ -33,7 +38,7 @@ class Address:
             return cls(results[0])
         return False
 
-    @classmethod
-    def update_seeker_address_by_email(cls, data):
-        query = "UPDATE work_address SET city_name = %(city_name)s, state = %(state)s, zip_code = %(zip_code)s,  created_at = NOW(),  updated_at = NOW() WHERE user_email = %(user_email)s"
-        return connectToMySQL('helping_hand_schema').query_db(query, data)
+    # @classmethod
+    # def update_seeker_address_by_email(cls, data):
+    #     query = "UPDATE work_address SET city_name = %(city_name)s, state = %(state)s, zip_code = %(zip_code)s,  created_at = NOW(),  updated_at = NOW() WHERE user_email = %(user_email)s"
+    #     return connectToMySQL('helping_hand_schema').query_db(query, data)

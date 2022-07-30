@@ -19,20 +19,24 @@
     </div>
     <div style="display:flex; justify-content: space-around;">
         <a href="/seeker/dashboard" class="btn btn-primary">Dashboard</a>
-        <a href="/seeker/selectedproviders" class="btn btn-primary">Selected Providers</a>
+        <a href="/seeker/selectedproviders" class="btn btn-primary">Filtered Providers</a>
         <a href="/seeker/unconfirmed" class="btn btn-primary">Unconfirmed Appointments</a>
         <a href="/seeker/profile" class="btn btn-primary">Profile</a>
     </div>
     <div style="text-align: center; border: 3px solid black; margin: 30px; padding: 10px;">
         <h1>Requested Appointments</h1>
-        {% for requested in seeker_requested %}
+        {% for request in seeker_requested %}
         <div style="border: 2px solid black; margin: 30px; padding: 10px;">
-            {{requested['users.last_name']}}, {{requested['users.first_name']}}<br />
-            {{requested.occupation}}<br />
-            {{requested.email}}<br />
-            {{requested.phone_number}}
+            {{request.last_name}}, {{request.first_name}}<br />
+            {{request.occupation}}<br />
+            {{request.email}}<br />
+            {{request.phone_number}}
+            <form action = "/requested/seeker/delete" method = "post">
+                <input type = "hidden" name = "id" value = "{{request.id}}" />
+                <input type = "submit" value = "Cancel Request" class = "btn btn-primary"/>
+            </form>
         </div>
-            {% endfor %}
+        {% endfor %}
     </div>
 </body>
 

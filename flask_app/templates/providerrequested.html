@@ -35,21 +35,35 @@
         <a href="/user/logout" class="btn btn-danger">Logout</a>
     </div>
     <div style="display:flex; justify-content: space-around;">
+        <a href="/provider/dashboard" class="btn btn-primary">Dashboard</a>
         <a href="/provider/setappointment" class="btn btn-primary">Set Appointments</a>
-        <a href="/provider/requested" class="btn btn-primary">Requested Appointments</a>
         <a href="/provider/unconfirmed" class="btn btn-primary">Unconfirmed Appointments</a>
         <a href="/provider/profile" class="btn btn-primary">Profile</a>
     </div>
     <div style="text-align: center;  border: 3px solid black; margin: 30px; padding: 20px;">
-        <input type='hidden' name="user_email" value="{{user_card.email}}" />
         <h1>Requested Appointments</h1>
         {% for reqappt in requested_appointment %}
         <div
             style="border: 1px solid black; margin-bottom: 20px; margin-top: 20px; margin-left: 10px; margin-right: 10px;padding: 5px;">
-            <span>{{reqappt.last_name}}, {{reqappt.first_name}}</span><br />
-            <span>Email: <span style="text-decoration: underline;">{{reqappt.seeker_email}}</span></span><br />
+            {{reqappt.last_name}}, {{reqappt.first_name}} <br />
+            {{reqappt.seeker_email}} <br />
+            {{reqappt.seeker_phone_number}}
+                <form action = "/provider/requested/update" method = "post">
+                    <input type="hidden" name="id" value="{{reqappt.id}}" />
+                    <label for="apptdate">Appointment Date:
+                    <input type="date" name="apptdate" id="apptdate" class="row form-control-sm m-2"></label>
+                    <label for="aapttime">Appointment Time:
+                    <input type="time" name="appttime" id="appttime" class="row form-control-sm m-2" /></label><br />
+                    <input type="submit" class="btn btn-primary" id = "submitdatetime" value="Submit Date and Time"/>
+                </form>
+                <form action = "/provider/requested/delete" method = "post">
+                    <input type = "hidden" name = "id" value = "{{reqappt.id}}" />
+                    <input type = "submit" value = "Cancel Request" class = "btn btn-primary"/>
+                </form>
+            <!-- <span></span><br />
+            <span>Email: <span style="text-decoration: underline;"></span></span><br />
             <span>Phone Number: <span
-                    style="text-decoration: underline;">{{reqappt.seeker_phone_number}}</span></span><br />
+                    style="text-decoration: underline;"></span></span><br />
 
             <button id='updatetimedate' class="btn btn-primary" style = "display:block; margin-left: 560px" onClick="myFunction()">Update Time and Date</button>
             <div id ="timedate" style ="display:none;">
@@ -62,7 +76,7 @@
                     <input type="submit" class="btn btn-primary" id = "submitdatetime" value="Submit Date and Time"/>
                 </form><br />
                 <button id="cancel" class="btn btn-primary"  onClick = "myFunction()">Cancel</button>
-            </div>
+            </div> -->
         </div>
         {% endfor %}
     </div>

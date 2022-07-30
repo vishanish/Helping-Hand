@@ -21,39 +21,19 @@
         <h1 style = "text-decoration: underline;">Set Appointments</h1>
             <form action='/provider/appointment/set' method='post'>
                 <input type='hidden' name="user_email" value="{{user_card.email}}" />
-                <div class="row">
-                    <div class="col">
-                        <label for="first_name" />First Name: 
-                        <input type="text" name="first_name" id="first_name" class="row form-control-sm m-2"/>
-                    </div>
-                    <div class="col">
-                        <label for="last_name" />Last Name:
-                        <input type="text" name="last_name" id="last_name" class="row form-control-sm m-2"/>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <label for="seeker_email" />Email:
-                        <input type="email" name="seeker_email" id="seeker_email" class="row form-control-sm m-2">
-                    </div>
-                    <div class="col">
-                        <label for="seeker_phone_number" />Phone Number:
-                        <input type="tel" name="seeker_phone_number" id="seeker_phone_number" class="row form-control-sm m-2"/>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <label for="apptdate" />Appointment Date:
-                        <input type="date" name="apptdate" id="apptdate" class="row form-control-sm m-2">
-                    </div>
-                    <div class="col">
-                        <label for="aapttime" />Appointment Time:
-                        <input type="time" name="appttime" id="appttime" class="row form-control-sm m-2"/>
-                    </div>
-                </div>
-                <div>
-                    <p for = "confirmed">Cofirm Appointment: <input type="checkbox" name = "confirmed" value = "Confirmed" /></p>
-                </div>
+                        <label for="first_name">First Name: 
+                        <input type="text" name="first_name" id="first_name" class="row form-control-sm m-2"/></label>,
+                        <label for="last_name">Last Name:
+                        <input type="text" name="last_name" id="last_name" class="row form-control-sm m-2"/></label><br />
+                        <label for="seeker_email">Email:
+                        <input type="email" name="seeker_email" id="seeker_email" class="row form-control-sm m-2"></label>
+                        <label for="seeker_phone_number">Phone Number:
+                        <input type="tel" name="seeker_phone_number" id="seeker_phone_number" class="row form-control-sm m-2"/></label><br />
+                        <label for="apptdate">Appointment Date:
+                        <input type="date" name="apptdate" id="apptdate" class="row form-control-sm m-2"></label>
+                        <label for="aapttime">Appointment Time:
+                        <input type="time" name="appttime" id="appttime" class="row form-control-sm m-2"/></label><br />
+                    <label for = "confirmed">Cofirm Appointment: <input type="checkbox" name = "confirmed" value = "Confirmed" /></label><br />
                 <input type="submit" value = "Set Appointment" class = "btn btn-primary m-2" />
             </form>
             <a href="/provider/dashboard" class="btn btn-primary m-2">Cancel</a>

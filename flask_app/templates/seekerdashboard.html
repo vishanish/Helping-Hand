@@ -17,7 +17,7 @@
         <a href="/user/logout" class="btn btn-danger">Logout</a>
     </div>
     <div style ="display:flex; justify-content: space-around;">
-        <a href="/seeker/selectedproviders" class = "btn btn-primary">Selected Providers</a>
+        <a href="/seeker/selectedproviders" class = "btn btn-primary">Filtered Providers</a>
         <a href="/seeker/requested" class = "btn btn-primary">Requested Appointments</a>
         <a href="/seeker/unconfirmed" class = "btn btn-primary">Unconfirmed Appointments</a>
         <a href="/seeker/profile" class = "btn btn-primary">Profile</a>
@@ -35,6 +35,10 @@
             {{seekconf.house_number}} {{seekconf.street_name}}, {{seekconf.suite_number}}<br/>
             {{seekconf.city_name}}, {{seekconf.state}}<br/>
             {{seekconf.zip_code}}
+            <form action="/dashboard/seeker/delete" method="post">
+                <input type="hidden" name="id" value="{{seekconf.id}}" />
+                <input type="submit" class="btn btn-primary" value="Delete Appointment" />
+            </form>
         </div>
         {% endfor %}
         <!-- {% for appt in seeker_confirmed %}

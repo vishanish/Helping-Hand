@@ -29,7 +29,6 @@ class Business:
             return cls(results[0])
         return False
 
-    
     @classmethod
     def update_provider_hours_by_email(cls, data):
         query = "UPDATE businesshours SET sundayopen = %(sundayopen)s, sundayclose = %(sundayclose)s, mondayopen = %(mondayopen)s, mondayclose = %(mondayclose)s, tuesdayopen = %(tuesdayopen)s, tuesdayclose = %(tuesdayclose)s, wednesdayopen = %(wednesdayopen)s, wednesdayclose = %(wednesdayclose)s, thursdayopen = %(thursdayopen)s, thursdayclose = %(thursdayclose)s, fridayopen = %(fridayopen)s, fridayclose = %(fridayclose)s, saturdayopen = %(saturdayopen)s, saturdayclose = %(saturdayclose)s, updated_at = NOW() WHERE user_email = %(user_email)s;"

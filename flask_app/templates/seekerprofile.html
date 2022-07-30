@@ -19,7 +19,7 @@
     </div>
     <div style ="display:flex; justify-content: space-around;">
         <a href="/seeker/dashboard" class = "btn btn-primary">Dashboard</a>
-        <a href="/seeker/selectedproviders" class = "btn btn-primary">Selected Providers</a>
+        <a href="/seeker/selectedproviders" class = "btn btn-primary">Filtered Providers</a>
         <a href="/seeker/requested" class = "btn btn-primary">Requested Appointments</a>
         <a href="/seeker/unconfirmed" class = "btn btn-primary">Unconfirmed Appointments</a>
     </div>
@@ -28,11 +28,9 @@
         <h1>Your Profile</h1>
         <input type='hidden' name="user_email" value="{{user_card.email}}" />
         <div style = "border: 1px solid black; margin-bottom: 5px; margin-top: 10px; margin-left: 10px; margin-right: 10px;padding: 5px;">
-            <span for="first_name">{{user_card.first_name}} </span><span
-                for="last_name">{{user_card.last_name}}</span><br />
+            <span for="last_name">{{user_card.last_name}}, </span><span for="first_name">{{user_card.first_name}}</span><br />
             <span for="email">{{user_card.email}}</span><br />
-            <span for="phone_number">{{user_card.phone_number}}</span><br />
-            <span for="phone_number">{{user_card.occupation}}</span>
+            <span for="phone_number">{{user_card.phone_number}}</span>
         </div><br />
 
         <!-- -------------------------Requirements---------------------------------------- -->

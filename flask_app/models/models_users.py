@@ -96,7 +96,6 @@ class User:
             return False
         return True
 
-
     @classmethod
     def get_users_by_email(cls, data):
         query ='SELECT * FROM users WHERE email = %(email)s;'
@@ -105,28 +104,11 @@ class User:
             return cls(results[0])
         return False
 
-    # @classmethod
-    # def users_by_email(cls, data):
-    #     query ='SELECT * FROM users JOIN businesshours ON users.email = businesshours.user_email JOIN specialities ON businesshours.user_email = specialities.user_email JOIN work_address ON specialities.user_email = work_address.user_email WHERE users.email = %(email)s;'
-    #     results = connectToMySQL('helping_hand_schema').query_db(query, data)
-    #     print('results: ', results)
-    #     if results:
-    #         return cls(results[0])
-    #     return False
-
-    # @classmethod
-    # def users_by_id(cls,data):
-    #     query = "SELECT * FROM users WHERE id = %(id)s"
-    #     results = connectToMySQL('helping_hand_schema').query_db(query, data)
-    #     if results:
-    #         return cls(results[0])
-    #     return False
-
     @classmethod
-    def update_provider_users_by_email(cls, data):
+    def update_users_by_email(cls, data):
         query =  "UPDATE users SET first_name = %(first_name)s, last_name = %(last_name)s, phone_number = %(phone_number)s, occupation = %(occupation)s, updated_at = NOW() WHERE email = %(email)s;"
         return connectToMySQL('helping_hand_schema').query_db(query, data)
-    
+
     @classmethod
     def delete_provider_user_account(cls,data):
         query1 = "DELETE FROM work_address WHERE user_email = %(email)s;"
@@ -135,24 +117,83 @@ class User:
         result2 = connectToMySQL('helping_hand_schema').query_db(query2, data)
         query3 = "DELETE FROM businesshours WHERE user_email = %(email)s;"
         result3 = connectToMySQL('helping_hand_schema').query_db(query3, data)
-        query4 = "DELETE FROM users WHERE email = %(email)s;"
+        query4 = "DELETE FROM appointments WHERE user_email = %(email)s;"
         result4 = connectToMySQL('helping_hand_schema').query_db(query4, data)
-        return [result1, result2, result3, result4]
-
-    @classmethod
-    def update_seeker_users_by_email(cls, data):
-        query =  "UPDATE users SET first_name = %(first_name)s, last_name = %(last_name)s, phone_number = %(phone_number)s, updated_at = NOW() WHERE email = %(email)s;"
-        return connectToMySQL('helping_hand_schema').query_db(query, data)
+        query5 = "DELETE FROM users WHERE email = %(email)s;"
+        result5 = connectToMySQL('helping_hand_schema').query_db(query5, data)
+        return [result1, result2, result3, result4, result5]
     
     @classmethod
     def delete_seeker_user_account(cls,data):
+        query1 = "DELETE FROM appointments WHERE user_email = %(email)s;"
+        result1 = connectToMySQL('helping_hand_schema').query_db(query1, data)
         query2 = "DELETE FROM specialities WHERE user_email = %(email)s;"
         result2 = connectToMySQL('helping_hand_schema').query_db(query2, data)
         query3 = "DELETE FROM work_address WHERE user_email = %(email)s;"
         result3 = connectToMySQL('helping_hand_schema').query_db(query3, data)
         query4 = "DELETE FROM users WHERE email = %(email)s;"
         result4 = connectToMySQL('helping_hand_schema').query_db(query4, data)
-        return [result2, result3, result4]
+        return [result1, result2, result3, result4]
+
+    @classmethod
+    def get_male_provider_seeker_homepage(cls):
+        query = "SELECT * FROM users LEFT JOIN specialities ON users.email = specialities.user_email LEFT JOIN businesshours ON specialities.user_email = businesshours.user_email LEFT JOIN work_address ON businesshours.user_email = work_address.user_email WHERE users.seekprov = 'provider' AND specialities.male = '1'"
+        return connectToMySQL('helping_hand_schema').query_db(query)
+
+    @classmethod
+    def get_female_provider_seeker_homepage(cls):
+        query = "SELECT * FROM users LEFT JOIN specialities ON users.email = specialities.user_email LEFT JOIN businesshours ON specialities.user_email = businesshours.user_email LEFT JOIN work_address ON businesshours.user_email = work_address.user_email WHERE users.seekprov = 'provider' AND specialities.female = '1'"
+        return connectToMySQL('helping_hand_schema').query_db(query)
+    
+    @classmethod
+    def get_lgbtq_provider_seeker_homepage(cls):
+        query = "SELECT * FROM users LEFT JOIN specialities ON users.email = specialities.user_email LEFT JOIN businesshours ON specialities.user_email = businesshours.user_email LEFT JOIN work_address ON businesshours.user_email = work_address.user_email WHERE users.seekprov = 'provider' AND specialities.lgbtq = '1'"
+        return connectToMySQL('helping_hand_schema').query_db(query)
+
+    @classmethod
+    def get_any_gender_provider_seeker_homepage(cls):
+        query = "SELECT * FROM users LEFT JOIN specialities ON users.email = specialities.user_email LEFT JOIN businesshours ON specialities.user_email = businesshours.user_email LEFT JOIN work_address ON businesshours.user_email = work_address.user_email WHERE users.seekprov = 'provider' AND specialities.any_gender = '1'"
+        return connectToMySQL('helping_hand_schema').query_db(query)
+
+    @classmethod
+    def get_physical_provider_seeker_homepage(cls):
+        query = "SELECT * FROM users LEFT JOIN specialities ON users.email = specialities.user_email LEFT JOIN businesshours ON specialities.user_email = businesshours.user_email LEFT JOIN work_address ON businesshours.user_email = work_address.user_email WHERE users.seekprov = 'provider' AND specialities.physical = '1'"
+        return connectToMySQL('helping_hand_schema').query_db(query)
+
+    @classmethod
+    def get_mental_provider_seeker_homepage(cls):
+        query = "SELECT * FROM users LEFT JOIN specialities ON users.email = specialities.user_email LEFT JOIN businesshours ON specialities.user_email = businesshours.user_email LEFT JOIN work_address ON businesshours.user_email = work_address.user_email WHERE users.seekprov = 'provider' AND specialities.mental = '1'"
+        return connectToMySQL('helping_hand_schema').query_db(query)
+
+    @classmethod
+    def get_financial_provider_seeker_homepage(cls):
+        query = "SELECT * FROM users LEFT JOIN specialities ON users.email = specialities.user_email LEFT JOIN businesshours ON specialities.user_email = businesshours.user_email LEFT JOIN work_address ON businesshours.user_email = work_address.user_email WHERE users.seekprov = 'provider' AND specialities.financial = '1'"
+        return connectToMySQL('helping_hand_schema').query_db(query)
+    
+    @classmethod
+    def get_any_hardship_provider_seeker_homepage(cls):
+        query = "SELECT * FROM users LEFT JOIN specialities ON users.email = specialities.user_email LEFT JOIN businesshours ON specialities.user_email = businesshours.user_email LEFT JOIN work_address ON businesshours.user_email = work_address.user_email WHERE users.seekprov = 'provider' AND specialities.any_hardship = '1'"
+        return connectToMySQL('helping_hand_schema').query_db(query)
+
+    @classmethod
+    def get_citizen_provider_seeker_homepage(cls):
+        query = "SELECT * FROM users LEFT JOIN specialities ON users.email = specialities.user_email LEFT JOIN businesshours ON specialities.user_email = businesshours.user_email LEFT JOIN work_address ON businesshours.user_email = work_address.user_email WHERE users.seekprov = 'provider' AND specialities.citizen = '1'"
+        return connectToMySQL('helping_hand_schema').query_db(query)
+    
+    @classmethod
+    def get_immigrant_provider_seeker_homepage(cls):
+        query = "SELECT * FROM users LEFT JOIN specialities ON users.email = specialities.user_email LEFT JOIN businesshours ON specialities.user_email = businesshours.user_email LEFT JOIN work_address ON businesshours.user_email = work_address.user_email WHERE users.seekprov = 'provider' AND specialities.immigrant = '1'"
+        return connectToMySQL('helping_hand_schema').query_db(query)
+
+    @classmethod
+    def get_refugee_provider_seeker_homepage(cls):
+        query = "SELECT * FROM users LEFT JOIN specialities ON users.email = specialities.user_email LEFT JOIN businesshours ON specialities.user_email = businesshours.user_email LEFT JOIN work_address ON businesshours.user_email = work_address.user_email WHERE users.seekprov = 'provider' AND specialities.refugee = '1'"
+        return connectToMySQL('helping_hand_schema').query_db(query)
+
+    @classmethod
+    def get_any_status_provider_seeker_homepage(cls):
+        query = "SELECT * FROM users LEFT JOIN specialities ON users.email = specialities.user_email LEFT JOIN businesshours ON specialities.user_email = businesshours.user_email LEFT JOIN work_address ON businesshours.user_email = work_address.user_email WHERE users.seekprov = 'provider' AND specialities.any_status = '1'"
+        return connectToMySQL('helping_hand_schema').query_db(query)
 
     @staticmethod
     def validate_register(data):
